@@ -1,6 +1,8 @@
 'use client'
 
 import { Card } from '@/components/ui/Card'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { Heart, Users, Award, Shield, Target, Zap } from 'lucide-react'
 
 export default function AboutPage() {
@@ -35,7 +37,9 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30">
       {/* Hero Section */}
       <section className="container-custom py-16 md:py-24">
         <div className="text-center max-w-3xl mx-auto">
@@ -188,5 +192,7 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
+    <Footer />
+    </>
   )
 }

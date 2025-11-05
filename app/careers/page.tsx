@@ -2,6 +2,8 @@
 
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { 
   Briefcase, Heart, Users, TrendingUp, Globe, 
   Code, Stethoscope, Megaphone, DollarSign, 
@@ -103,7 +105,9 @@ export default function CareersPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30">
       {/* Hero */}
       <section className="bg-gradient-to-r from-primary-500 to-primary-600 py-20">
         <div className="container-custom text-center">
@@ -303,5 +307,7 @@ export default function CareersPage() {
         </div>
       </section>
     </div>
+    <Footer />
+    </>
   )
 }

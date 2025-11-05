@@ -1,11 +1,15 @@
 'use client'
 
 import { Card } from '@/components/ui/Card'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { Shield, Lock, Eye, Database, UserCheck, AlertCircle } from 'lucide-react'
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-12">
       <div className="container-custom max-w-4xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
@@ -267,5 +271,7 @@ export default function PrivacyPage() {
         </Card>
       </div>
     </div>
+    <Footer />
+    </>
   )
 }

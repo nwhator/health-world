@@ -1,6 +1,8 @@
 'use client'
 
 import { Card } from '@/components/ui/Card'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { Mail, Phone, MapPin, MessageCircle, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -57,7 +59,9 @@ export default function ContactPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30">
       {/* Hero Section */}
       <section className="container-custom py-16 md:py-20">
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -217,5 +221,7 @@ export default function ContactPage() {
         </div>
       </section>
     </div>
+    <Footer />
+    </>
   )
 }

@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { Card } from '@/components/ui/Card'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { 
   Search, HelpCircle, MessageCircle, Phone, Mail, 
   ChevronDown, ChevronUp, Shield, CreditCard, Calendar,
@@ -117,7 +119,9 @@ export default function HelpPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-12">
       <div className="container-custom max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -248,5 +252,7 @@ export default function HelpPage() {
         </Card>
       </div>
     </div>
+    <Footer />
+    </>
   )
 }

@@ -5,6 +5,8 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { 
   User, Mail, Phone, MapPin, Briefcase, Upload, 
   CheckCircle, FileText, Award, Shield, Calendar, DollarSign, Users 
@@ -144,7 +146,9 @@ export default function ProviderRegisterPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-b from-white to-primary-50/30 py-12">
       <div className="container-custom max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -692,5 +696,7 @@ export default function ProviderRegisterPage() {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   )
 }

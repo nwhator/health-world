@@ -138,8 +138,10 @@ cd health-world
 2. Install dependencies:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
+
+**Note**: The `--legacy-peer-deps` flag is required due to React 19 compatibility with react-leaflet.
 
 3. Set up environment variables:
 
@@ -605,7 +607,30 @@ Edit `tailwind.config.ts` to customize:
 2. Create dedicated service page in `app/services/[slug]/`
 3. Add icon and category
 
-## 📝 Future Enhancements
+## � Deployment
+
+### Vercel (Recommended)
+
+The app is configured for one-click deployment to Vercel:
+
+1. Push your code to GitHub
+2. Import project to [Vercel](https://vercel.com)
+3. Add environment variables
+4. Deploy!
+
+The `.npmrc` file ensures dependencies install correctly with `--legacy-peer-deps`.
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+### Other Platforms
+
+The app can also be deployed to:
+- Netlify
+- Railway
+- AWS Amplify
+- Any platform supporting Next.js 16
+
+## �📝 Future Enhancements
 
 - [ ] Real database integration (Prisma + PostgreSQL)
 - [ ] Push notifications

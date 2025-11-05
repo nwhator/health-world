@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Health World</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>Health World</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="profiles.html"><i class="fas fa-user-plus"></i> Join Us</a>
+                <a href="verification.html"><i class="fas fa-certificate"></i> Verification</a>
+                <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </nav>
+            <div class="user-menu">
+                <div class="user-icon" onclick="toggleUserMenu()">
+                    <i class="fas fa-user"></i>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="user-dropdown" id="userDropdown">
+                    <!-- Dynamic content based on login status -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Profile Content -->
+    <main class="profile-page">
+        <div class="container">
+            <div class="profile-header-page">
+                <div class="profile-avatar-large">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info-main" id="profileInfo">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+                <div class="profile-actions-header">
+                    <button onclick="editProfile()" class="edit-profile-btn">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                    <button onclick="window.location.href='dashboard.html'" class="dashboard-btn">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <div class="profile-content-page">
+                <div class="profile-sections-grid">
+                    <div class="profile-section">
+                        <h3><i class="fas fa-info-circle"></i> Personal Information</h3>
+                        <div class="info-grid" id="personalInfo">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                        <button onclick="editPersonalInfo()" class="section-action-btn">
+                            <i class="fas fa-edit"></i> Edit Information
+                        </button>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-chart-line"></i> Activity Summary</h3>
+                        <div class="activity-stats" id="activityStats">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-calendar-alt"></i> Recent Appointments</h3>
+                        <div class="recent-appointments" id="recentAppointments">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                        <button onclick="window.location.href='dashboard.html#appointments'" class="section-action-btn">
+                            <i class="fas fa-calendar"></i> View All Appointments
+                        </button>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-file-medical"></i> Health Records</h3>
+                        <div class="health-records" id="healthRecords">
+                            <!-- Dynamic content will be loaded here -->
+                        </div>
+                        <button onclick="viewAllHealthRecords()" class="section-action-btn">
+                            <i class="fas fa-folder-open"></i> View All Records
+                        </button>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-cog"></i> Account Settings</h3>
+                        <div class="settings-quick-access">
+                            <div class="setting-quick-item" onclick="changePassword()">
+                                <i class="fas fa-key"></i>
+                                <span>Change Password</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="setting-quick-item" onclick="setupTwoFactor()">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Two-Factor Authentication</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="setting-quick-item" onclick="notificationSettings()">
+                                <i class="fas fa-bell"></i>
+                                <span>Notification Preferences</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="setting-quick-item" onclick="privacySettings()">
+                                <i class="fas fa-user-shield"></i>
+                                <span>Privacy Settings</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3><i class="fas fa-star"></i> Preferences</h3>
+                        <div class="preferences-grid">
+                            <div class="preference-item">
+                                <label>Language</label>
+                                <select id="languageSelect" onchange="updateLanguage()">
+                                    <option value="en">English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                </select>
+                            </div>
+                            <div class="preference-item">
+                                <label>Time Zone</label>
+                                <select id="timezoneSelect" onchange="updateTimezone()">
+                                    <option value="EST">Eastern Time</option>
+                                    <option value="CST">Central Time</option>
+                                    <option value="MST">Mountain Time</option>
+                                    <option value="PST">Pacific Time</option>
+                                </select>
+                            </div>
+                            <div class="preference-item">
+                                <label>Theme</label>
+                                <select id="themeSelect" onchange="updateTheme()">
+                                    <option value="light">Light Mode</option>
+                                    <option value="dark">Dark Mode</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Health World</h4>
+                    <p>Your trusted healthcare partner, providing quality medical services at your doorstep.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="profiles.html">Join Us</a>
+                    <a href="verification.html">Verification</a>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> Emergency: 911</p>
+                    <p><i class="fas fa-phone"></i> Support: 1-800-HEALTH</p>
+                    <p><i class="fas fa-envelope"></i> info@healthworld.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Health World. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals will appear here -->
+    <div id="modalContainer"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/interactive.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

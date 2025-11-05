@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health World - Your Healthcare Partner</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Health World</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Screen -->
+    <main id="home" class="home-screen">
+        <div class="container">
+            <div class="hero-section">
+                <h2>Your Health, Our Priority</h2>
+                <p>Access emergency services and at-home healthcare with just a click</p>
+                
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input type="text" placeholder="Search for healthcare services..." class="search-bar">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <!-- Quick Access Buttons -->
+            <div class="quick-access">
+                <div class="access-card emergency" onclick="openEmergencyModule()">
+                    <div class="card-icon">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <h3>Emergency Assistance</h3>
+                    <p>Fire, Ambulance, Police</p>
+                    <button class="access-btn emergency-btn">Get Help Now</button>
+                </div>
+
+                <div class="access-card at-home" onclick="openAtHomeCare()">
+                    <div class="card-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>At-Home Care</h3>
+                    <p>Doctors, Nurses, Physiotherapists</p>
+                    <button class="access-btn care-btn">Book Service</button>
+                </div>
+            </div>
+
+            <!-- Service Categories Preview -->
+            <div class="services-preview">
+                <h3>Popular Services</h3>
+                <div class="service-grid">
+                    <div class="service-item">
+                        <i class="fas fa-tooth"></i>
+                        <span>Dental Care</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>Health Monitoring</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-dumbbell"></i>
+                        <span>Physiotherapy</span>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-pills"></i>
+                        <span>Medicine Delivery</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Emergency Assistance Module (Hidden by default) -->
+    <section id="emergency-module" class="module-overlay" style="display: none;">
+        <div class="module-content">
+            <div class="module-header">
+                <h2>Emergency Assistance</h2>
+                <button class="close-btn" onclick="closeModule('emergency-module')">&times;</button>
+            </div>
+            <div class="emergency-services">
+                <div class="emergency-service" onclick="callEmergency('ambulance')">
+                    <i class="fas fa-ambulance"></i>
+                    <h3>Ambulance</h3>
+                    <p>Medical Emergency</p>
+                </div>
+                <div class="emergency-service" onclick="callEmergency('fire')">
+                    <i class="fas fa-fire-extinguisher"></i>
+                    <h3>Fire Department</h3>
+                    <p>Fire Emergency</p>
+                </div>
+                <div class="emergency-service" onclick="callEmergency('police')">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Police</h3>
+                    <p>Security Emergency</p>
+                </div>
+            </div>
+            <div class="location-sharing">
+                <p><i class="fas fa-map-marker-alt"></i> Your location will be shared with emergency responders</p>
+                <button class="share-location-btn">Share My Location</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- At-Home Care Module (Hidden by default) -->
+    <section id="athome-module" class="module-overlay" style="display: none;">
+        <div class="module-content">
+            <div class="module-header">
+                <h2>At-Home Care Services</h2>
+                <button class="close-btn" onclick="closeModule('athome-module')">&times;</button>
+            </div>
+            <div class="service-categories">
+                <div class="category-grid">
+                    <div class="category-card" onclick="bookService('dental')">
+                        <i class="fas fa-tooth"></i>
+                        <h4>Dental Checkups</h4>
+                        <p>Professional dental care at home</p>
+                    </div>
+                    <div class="category-card" onclick="bookService('bp-monitoring')">
+                        <i class="fas fa-heartbeat"></i>
+                        <h4>Blood Pressure Monitoring</h4>
+                        <p>Regular health checkups</p>
+                    </div>
+                    <div class="category-card" onclick="bookService('physiotherapy')">
+                        <i class="fas fa-dumbbell"></i>
+                        <h4>Physiotherapy</h4>
+                        <p>Recovery and rehabilitation</p>
+                    </div>
+                    <div class="category-card" onclick="bookService('nursing')">
+                        <i class="fas fa-user-nurse"></i>
+                        <h4>Nursing Care</h4>
+                        <p>Professional nursing services</p>
+                    </div>
+                </div>
+            </div>
+            <div class="booking-options">
+                <div class="payment-options">
+                    <label>
+                        <input type="radio" name="payment-type" value="one-time">
+                        <span>One-time Payment</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="payment-type" value="subscription">
+                        <span>Subscription Plan</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Health World</h4>
+                    <p>Your trusted healthcare partner, available 24/7</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li>Emergency Care</li>
+                        <li>At-Home Services</li>
+                        <li>Medicine Delivery</li>
+                        <li>Health Monitoring</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Emergency: 911</p>
+                    <p>Support: 1-800-HEALTH</p>
+                    <p>Email: support@healthworld.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Health World. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/interactive.js"></script>
+</body>
+</html>

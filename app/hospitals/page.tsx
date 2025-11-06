@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, KeyboardEvent } from 'react'
+import dynamic from 'next/dynamic'
+import { toast } from 'sonner'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
-import { OpenStreetMap } from '@/components/maps/OpenStreetMap'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -24,6 +25,23 @@ import {
   Mail,
   Building,
 } from 'lucide-react'
+import { HospitalListSkeleton } from '@/components/ui/Skeleton'
+
+// Dynamically import OpenStreetMap to avoid SSR issues with Leaflet
+const OpenStreetMap = dynamic(
+  () => import('@/components/maps/OpenStreetMap').then((mod) => mod.OpenStreetMap),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[500px] rounded-lg bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-2"></div>
+          <p className="text-gray-600">Loading map...</p>
+        </div>
+      </div>
+    )
+  }
+)
 
 interface Hospital {
   id: string
@@ -245,25 +263,35 @@ export default function HospitalsPage() {
             {/* Sidebar - Search & Filters */}
             <div className="lg:col-span-1 space-y-6">
               {/* Search */}
-              <Card className="p-4">
+              <Card className="p-4 shadow-sm hover:shadow-md transition-shadow">
+                <h2 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <Search className="w-5 h-5 text-primary-600" />
+                  Search Hospitals
+                </h2>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 transition-colors" />
                   <Input
                     type="text"
                     placeholder="Search hospitals..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 focus:ring-2 focus:ring-primary-500 transition-all"
+                    aria-label="Search hospitals by name"
                   />
                 </div>
               </Card>
 
               {/* Get Location */}
-              <Card className="p-4">
+              <Card className="p-4 shadow-sm hover:shadow-md transition-shadow">
+                <h2 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-primary-600" />
+                  Your Location
+                </h2>
                 <Button
                   onClick={() => {
                     if (navigator.geolocation) {
                       setLocationStatus('loading')
+                      toast.loading('Getting your location...', { id: 'location' })
                       navigator.geolocation.getCurrentPosition(
                         (position) => {
                           const location = {
@@ -272,15 +300,20 @@ export default function HospitalsPage() {
                           }
                           setUserLocation(location)
                           setLocationStatus('success')
+                          toast.success('Location updated!', { id: 'location' })
                           fetchNearbyHospitals(location)
                         },
-                        () => setLocationStatus('error'),
+                        () => {
+                          setLocationStatus('error')
+                          toast.error('Failed to get location', { id: 'location' })
+                        },
                         { enableHighAccuracy: true }
                       )
                     }
                   }}
                   className="w-full"
                   disabled={locationStatus === 'loading' || loading}
+                  isLoading={locationStatus === 'loading' || loading}
                 >
                   <Navigation className="w-4 h-4 mr-2" />
                   {locationStatus === 'loading' || loading
@@ -381,18 +414,26 @@ export default function HospitalsPage() {
               {/* Hospital List */}
               <div className="space-y-4 max-h-[600px] overflow-y-auto">
                 {loading ? (
-                  <Card className="p-8 text-center">
-                    <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary-600" />
-                    <p className="text-gray-600">Finding nearby hospitals from OpenStreetMap...</p>
-                  </Card>
+                  <HospitalListSkeleton />
                 ) : (
                   filteredHospitals.map((hospital) => (
                     <Card
                       key={hospital.id}
-                      className={`p-4 cursor-pointer transition-all hover:shadow-lg ${
-                        selectedHospital?.id === hospital.id ? 'ring-2 ring-primary-500' : ''
+                      className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
+                        selectedHospital?.id === hospital.id 
+                          ? 'ring-2 ring-primary-500 shadow-lg border-primary-500' 
+                          : 'border border-gray-200'
                       }`}
                       onClick={() => setSelectedHospital(hospital)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyPress={(e: KeyboardEvent<HTMLDivElement>) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          setSelectedHospital(hospital)
+                        }
+                      }}
+                      aria-label={`Select ${hospital.name}`}
                     >
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold text-lg">{hospital.name}</h3>
@@ -441,15 +482,18 @@ export default function HospitalsPage() {
 
             {/* Main Content - Map & Details */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Map */}
-              <Card className="p-0 overflow-hidden">
-                <OpenStreetMap
-                  center={mapCenter}
-                  zoom={13}
-                  markers={mapMarkers}
-                  className="w-full h-[500px]"
-                />
-              </Card>
+              {/* Map - Sticky on desktop */}
+              <div className="lg:sticky lg:top-6">
+                <Card className="p-0 overflow-hidden">
+                  <OpenStreetMap
+                    center={mapCenter}
+                    zoom={13}
+                    markers={mapMarkers}
+                    className="w-full h-[400px] md:h-[500px]"
+                    enableClustering={filteredHospitals.length > 10}
+                  />
+                </Card>
+              </div>
 
               {/* Selected Hospital Details */}
               {selectedHospital && (

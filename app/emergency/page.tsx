@@ -1,15 +1,31 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Modal } from '@/components/ui/Modal'
-import { OpenStreetMap } from '@/components/maps/OpenStreetMap'
 import { Phone, AlertCircle, MapPin, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import { EmergencyType } from '@/types'
+
+// Dynamically import OpenStreetMap to avoid SSR issues with Leaflet
+const OpenStreetMap = dynamic(
+  () => import('@/components/maps/OpenStreetMap').then((mod) => mod.OpenStreetMap),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-96 rounded-lg bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-2"></div>
+          <p className="text-gray-600">Loading map...</p>
+        </div>
+      </div>
+    )
+  }
+)
 
 export default function EmergencyPage() {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null)

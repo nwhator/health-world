@@ -2,6 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
+import 'leaflet.markercluster'
+
+// Import cluster CSS
+import 'leaflet/dist/leaflet.css'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
 // Fix for default marker icons in Leaflet with Next.js
 delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -24,6 +30,7 @@ interface OpenStreetMapProps {
   zoom?: number
   markers?: Marker[]
   className?: string
+  enableClustering?: boolean
 }
 
 const createCustomIcon = (color: string) => {
@@ -51,10 +58,10 @@ const colorMap: Record<string, string> = {
   orange: '#EA580C',
 }
 
-export function OpenStreetMap({ center, zoom = 13, markers = [], className = '' }: OpenStreetMapProps) {
+export function OpenStreetMap({ center, zoom = 13, markers = [], className = '', enableClustering = true }: OpenStreetMapProps) {
   const mapRef = useRef<L.Map | null>(null)
   const mapContainerRef = useRef<HTMLDivElement>(null)
-  const markersLayerRef = useRef<L.LayerGroup | null>(null)
+  const markersLayerRef = useRef<L.MarkerClusterGroup | L.LayerGroup | null>(null)
   const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => {
@@ -73,8 +80,17 @@ export function OpenStreetMap({ center, zoom = 13, markers = [], className = '' 
       maxZoom: 19,
     }).addTo(map)
 
-    // Create a layer group for markers
-    const markersLayer = L.layerGroup().addTo(map)
+    // Create a layer group or cluster group for markers
+    const markersLayer = enableClustering 
+      ? L.markerClusterGroup({
+          chunkedLoading: true,
+          spiderfyOnMaxZoom: true,
+          showCoverageOnHover: false,
+          zoomToBoundsOnClick: true,
+        })
+      : L.layerGroup()
+    
+    markersLayer.addTo(map)
     markersLayerRef.current = markersLayer
 
     mapRef.current = map
@@ -86,7 +102,7 @@ export function OpenStreetMap({ center, zoom = 13, markers = [], className = '' 
         mapRef.current = null
       }
     }
-  }, [])
+  }, [enableClustering])
 
   // Update center
   useEffect(() => {

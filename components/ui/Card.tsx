@@ -1,14 +1,14 @@
-import { ReactNode } from 'react'
+import { ReactNode, HTMLAttributes, KeyboardEvent } from 'react'
 import clsx from 'clsx'
 
-interface CardProps {
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
   className?: string
   hover?: boolean
   onClick?: () => void
 }
 
-export function Card({ children, className, hover = false, onClick }: CardProps) {
+export function Card({ children, className, hover = false, onClick, ...props }: CardProps) {
   const Component = onClick ? 'button' : 'div'
   
   return (
@@ -17,8 +17,10 @@ export function Card({ children, className, hover = false, onClick }: CardProps)
       className={clsx(
         'bg-white rounded-lg shadow-md p-6 transition-all duration-200',
         hover && 'hover:shadow-lg hover:-translate-y-0.5 cursor-pointer',
+        onClick && 'text-left w-full',
         className
       )}
+      {...(props as any)}
     >
       {children}
     </Component>

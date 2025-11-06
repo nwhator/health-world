@@ -6,16 +6,10 @@ import { Footer } from '@/components/layout/Footer'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Modal } from '@/components/ui/Modal'
+import { OpenStreetMap } from '@/components/maps/OpenStreetMap'
 import { Phone, AlertCircle, MapPin, Check } from 'lucide-react'
 import { toast } from 'sonner'
-import dynamic from 'next/dynamic'
 import { EmergencyType } from '@/types'
-
-// Dynamically import map component to avoid SSR issues
-const EmergencyMap = dynamic(() => import('@/components/emergency/EmergencyMap'), {
-  ssr: false,
-  loading: () => <div className="w-full h-96 bg-gray-100 rounded-lg animate-pulse" />,
-})
 
 export default function EmergencyPage() {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null)
@@ -266,9 +260,18 @@ export default function EmergencyPage() {
                       </div>
                     )}
                   </div>
-                  <EmergencyMap 
+                  <OpenStreetMap 
                     center={location} 
-                    activeEmergency={activeEmergency}
+                    zoom={15}
+                    markers={[
+                      {
+                        position: location,
+                        title: 'Your Location',
+                        icon: activeEmergency ? 'red' : 'green',
+                        popup: '<strong>Your Current Location</strong>'
+                      }
+                    ]}
+                    className="w-full h-96 rounded-lg"
                   />
                 </>
               ) : (

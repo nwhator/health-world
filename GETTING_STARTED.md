@@ -66,8 +66,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 **Public Pages:**
 - **Home**: <http://localhost:3000>
-- **Emergency**: <http://localhost:3000/emergency>
+- **Emergency**: <http://localhost:3000/emergency> *(uses OpenStreetMap)*
 - **Ambulance Tracking**: <http://localhost:3000/ambulance>
+- **Hospital Finder**: <http://localhost:3000/hospitals> *(uses OpenStreetMap - no API key needed!)*
 - **Services**: <http://localhost:3000/services>
 - **Telemedicine**: <http://localhost:3000/telemedicine>
 - **Pharmacy**: <http://localhost:3000/pharmacy>
@@ -123,13 +124,33 @@ health-world/
 ### 1. Emergency Assistance
 
 - One-tap emergency calls (Fire, Ambulance, Police)
-- Automatic location detection
-- Interactive map showing your location
+- Automatic location detection with high accuracy
+- Interactive Google Map showing your location
 - Panic button for immediate help
 
 **Try it:** Visit `/emergency` and allow location access
 
-### 2. At-Home Healthcare Services
+### 2. Hospital Finder **(Uses OpenStreetMap - 100% Free!)**
+
+- Find nearby hospitals in real-time from OpenStreetMap
+- Search by name, location, or operator
+- Filter by emergency services and wheelchair accessibility
+- View hospital details: phone, website, hours, bed count
+- Get directions via OpenStreetMap
+- Distance calculation from your location
+- **No API key required** - completely free and open-source!
+
+**Try it:** Visit `/hospitals` and allow location access
+
+**Powered by:**
+- 🗺️ **OpenStreetMap** - Free, community-driven maps
+- 🌍 **Overpass API** - Real-time hospital data from OSM
+- 📍 **Nominatim** - Free geocoding (coordinates ↔ addresses)
+- 🍃 **Leaflet** - Open-source interactive maps
+
+See `OPENSTREETMAP_SETUP.md` for more details.
+
+### 3. At-Home Healthcare Services
 
 - Browse available services
 - Book appointments (one-time or subscription)
@@ -349,10 +370,11 @@ npm run dev
 
 ## Next Steps
 
-1. **Configure OAuth**: Set up Google OAuth in Google Cloud Console
+1. **Configure OAuth**: Set up Google OAuth in Google Cloud Console (see `GOOGLE_OAUTH_SETUP.md`)
 2. **Set up Database**: Replace mock data with Prisma + PostgreSQL
 3. **Configure Stripe**: Add your Stripe keys for payments
-4. **Deploy**: Push to GitHub and deploy on Vercel
+4. **Deploy**: Push to GitHub and deploy on Vercel (see `DEPLOYMENT.md`)
+5. **Optional - Contribute to OpenStreetMap**: Improve hospital data in your area (see `OPENSTREETMAP_SETUP.md`)
 
 ## Resources
 

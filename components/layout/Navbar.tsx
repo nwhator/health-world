@@ -16,6 +16,7 @@ export function Navbar() {
     { name: 'Services', href: '/services' },
     { name: 'Telemedicine', href: '/telemedicine' },
     { name: 'Pharmacy', href: '/pharmacy' },
+    { name: 'Hospitals', href: '/hospitals' },
     { name: 'Appointments', href: '/appointments' },
     { name: 'Emergency', href: '/emergency' },
   ]

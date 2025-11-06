@@ -37,6 +37,7 @@ interface Hospital {
   website?: string
   businessStatus?: string
   photos?: string[]
+  distance?: number
 }
 
 // Calculate distance between two coordinates (Haversine formula)
@@ -506,10 +507,10 @@ export default function HospitalsPage() {
                         </span>
                       )}
                     </div>
-                    {selectedHospital.distance > 0 && (
+                    {selectedHospital.distance && selectedHospital.distance > 0 && (
                       <div className="text-right">
                         <div className="text-3xl font-bold text-primary-600">
-                          {selectedHospital.distance.toFixed(1)}
+                          {selectedHospital.distance?.toFixed(1)}
                         </div>
                         <div className="text-sm text-gray-600">km away</div>
                       </div>
